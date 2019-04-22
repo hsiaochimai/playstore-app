@@ -8,8 +8,8 @@ app.use(morgan('common'));
 app.use(cors());
 
 app.get('/apps',(req,res)=>{
-    const {genre=" ",sort}=req.query
-    console.log(req.query)
+    res.json(playstore)
+    const {genre, sort}=req.query
 if(sort){
     if(!['Rating','App'].includes(sort)){
         return res
@@ -60,24 +60,6 @@ if(genre) {
     res.json(genreResults)
 }
 
-//     genreResults
-//       .sort((a, b) => {
-//         return a[genre] > b[Genres] ? 1 : a[Genres] < b[Genres] ? -1 : 0;
-//     }); 
-//   }  
-
-//   res
-//     .json(genreResults);
-// });
-
-
-//     playstore.Rating.sort((a,b)=>{
-//         return a[sort]> b[sort] ? 1: a[sort] < b[sort] ? -1 :0;
-//     })
-// }
-// else
 
 })
-app.listen(8000, () => {
-    console.log('Server started on PORT 8000');
-  });
+module.exports = app;
