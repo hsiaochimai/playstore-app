@@ -17,8 +17,6 @@ const appSort = function (a, b) {
 
 app.get('/apps', (req, res) => {
 
-    console.log('Got request!')
-
     const { genre, sort } = req.query
     if (sort) {
         if (!['rating', 'app'].includes(sort)) {
