@@ -56,7 +56,7 @@ app.get('/apps', (req, res) => {
 })
 
 if (require.main === module) {
-    console.log('called directly');
+    console.log('called directly, starting server');
     const port = 3333
     app.listen(port, () => console.log(`App listening on port ${port}!`))
 }
