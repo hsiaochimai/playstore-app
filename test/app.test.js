@@ -1,6 +1,34 @@
 const expect = require('chai').expect;
-const app = require('../app');
+const { app, appSort, ratingSort } = require('../app');
 const request = require('supertest');
+const mocha = require('mocha')
+var describe = mocha.describe
+
+function checkFilter(arr, genre) {
+    let i = 0
+    while (i < arr.length) {
+        if (!arr[i].Genres.split(';').includes(genre)) {
+            return false
+        }
+        i++
+    }
+    return true
+}
+
+function checkSort(arr, sortFn) {
+    let i = 0;
+    let sorted = true;
+    while (sorted && i < arr - 1) {
+        const a = arr[i]
+        const b = arr[i + 1]
+        sorted = sortFn(a, b) < 0
+        if (!sorted) {
+            break
+        }
+        i++;
+    }
+    return sorted
+}
 
 describe('App', () => {
     it('GET /apps should return a message', () => {
@@ -34,20 +62,34 @@ describe('App', () => {
             .expect('Content-Type', /json/)
             .then(res => {
                 expect(res.body).to.be.an('array');
-                let i = 0;
-                let sorted = true;
-                while (sorted && i < res.body.length - 1) {
-                    const a = res.body[i].Rating
-                    const b = res.body[i + 1].Rating
-                    console.log(res.body[i + 1].App)
-                    sorted = a >= b
-                    if (!sorted) {
-                        break
-                    }
-                    i++;
-                }
-                expect(sorted).to.be.true;
+                expect(checkSort(res.body, ratingSort)).to.be.true;
             })
 
     });
+    it('Should sort by App', () => {
+        return request(app)
+            .get('/apps')
+            .query({ sort: 'rating' })
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .then(res => {
+                expect(res.body).to.be.an('array');
+                expect(checkSort(res.body, appSort)).to.be.true;
+            })
+
+    });
+
+    it('Should filter by Genres', () => {
+        return request(app)
+            .get('/apps')
+            .query({ genre: 'Strategy' })
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .then(res => {
+                expect(res.body).to.be.an('array');
+                expect(checkFilter(res.body, 'Strategy')).to.be.true;
+            })
+
+    });
+
 });

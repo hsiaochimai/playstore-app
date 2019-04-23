@@ -7,6 +7,14 @@ const playstore = require('./playstore')
 app.use(morgan('common'));
 app.use(cors());
 
+const ratingSort = function (a, b) {
+    return b.Rating - a.Rating
+}
+const appSort = function (a, b) {
+    return (a.App.toLowerCase() === b.App.toLowerCase()) ? 0
+        : a.App.toLowerCase() > b.App.toLowerCase() ? 1 : -1
+}
+
 app.get('/apps', (req, res) => {
 
     console.log('Got request!')
@@ -36,16 +44,11 @@ app.get('/apps', (req, res) => {
 
     if (sort === 'rating') {
         console.log(`rating sort`)
-        results.sort(function (a, b) {
-            return b.Rating - a.Rating
-        })
+        results.sort(ratingSort)
     }
     if (sort === 'app') {
         console.log(`app sort`)
-        results.sort(function (a, b) {
-            return (a.App.toLowerCase() === b.App.toLowerCase()) ? 0
-                : a.App.toLowerCase() > b.App.toLowerCase() ? 1 : -1
-        })
+        results.sort(appSort)
     }
 
     return res.json(results)
@@ -59,4 +62,8 @@ if (require.main === module) {
 }
 
 
-module.exports = app;
+module.exports = {
+    app,
+    appSort,
+    ratingSort,
+};
