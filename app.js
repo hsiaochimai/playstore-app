@@ -25,17 +25,15 @@ app.get('/apps', (req, res) => {
                 .send('Sort must be either rating or app')
         }
     }
+
+    let results = [...playstore]
+
     if (genre) {
         if (!['Action', 'Puzzle', 'Strategy', 'Casual', 'Arcade', 'Card'].includes(genre)) {
             return res
                 .status(400)
                 .send('Genre needs to be either Action, Puzzle, Strategy, Casual, Arcade or Card')
         }
-    }
-
-    let results = [...playstore]
-
-    if (genre) {
         console.log(`genre filter: ${genre}`)
         results = playstore.filter(app => app.Genres.split(';').includes(genre))
     }
