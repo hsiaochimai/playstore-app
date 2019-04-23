@@ -8,21 +8,21 @@ app.use(morgan('common'));
 app.use(cors());
 
 app.get('/apps',(req,res)=>{
-    res.json(playstore)
+
     const {genre, sort}=req.query
 if(sort){
-    if(!['Rating','App'].includes(sort)){
+    if(!['rating','app'].includes(sort)){
         return res
           .status(400)
-          .send('Sort must be either Rating or App')
+          .send('Sort must be either rating or app')
     }
 }
-if(sort==='Rating'){
+if(sort==='rating'){
     console.log(`hello`)
     const ratingResults=playstore.sort(function(a,b){
         return b.Rating-a.Rating
     })
-    res.json(ratingResults)
+    return res.json(ratingResults)
 }
 
 if(sort==='App'){
@@ -37,7 +37,7 @@ if(sort==='App'){
         return 0
         
     })
-    res.json(appResults)
+    return res.json(appResults)
 }
 if(genre){
     if(!['Action','Puzzle','Strategy','Casual','Arcade','Card'].includes(genre)){
@@ -57,9 +57,12 @@ if(genre) {
             return 1
         return 0
     })
-    res.json(genreResults)
+   return res.json(genreResults)
 }
 
+else{
+    res.json(playstore)
+}
 
 })
 module.exports = app;
