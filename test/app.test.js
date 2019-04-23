@@ -2,7 +2,8 @@ const expect = require('chai').expect;
 const { app, appSort, ratingSort } = require('../app');
 const request = require('supertest');
 const mocha = require('mocha')
-var describe = mocha.describe
+const describe = mocha.describe
+const it = mocha.it
 
 function checkFilter(arr, genre) {
     let i = 0
