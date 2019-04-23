@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const app= require('../playstoreServer/app');
+const app= require('../app');
 const request = require('supertest');
 
 describe('App', ()=>{
