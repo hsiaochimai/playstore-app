@@ -46,7 +46,8 @@ if(genre){
           .send('Genre needs to be either Action, Puzzle, Strategy, Casual, Arcade or Card')
     }
 }
-let genreResults=playstore.filter(app=>app.Genres.toLowerCase().includes(genre.toLowerCase()))
+let genreResults=playstore.filter(app=>app.Genres.split(';').includes(genre))
+
 if(genre) {
     genreResults.sort((a,b)=>{
         let appA=a.App.toLowerCase()
