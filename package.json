@@ -7,9 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "start": "node server",
-    "debug": "ndb node server",
-    "dev": "nodemon server",
+    "start": "node app.js",
+    "debug": "ndb node app.js",
+    "dev": "nodemon app.js",
     "test": "mocha"
   },
   "repository": {
@@ -23,9 +23,15 @@
     "url": "https://github.com/hsiaochimai/playstore-app/issues"
   },
   "homepage": "https://github.com/hsiaochimai/playstore-app#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
+  },
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.18.11",
+    "supertest": "^4.0.2"
   }
 }
